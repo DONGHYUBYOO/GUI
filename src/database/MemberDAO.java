@@ -31,16 +31,14 @@ public class MemberDAO {
 		}
 		return con;
 	}	
-	
 	//데이터베이스 요청
-	public Vector<MemberVO> listMember() {
-		Vector<MemberVO> vecList = new Vector<MemberVO>();		
-		String sql="select * from memberTBL";
+	public Vector<MemberVO> getList() {
+		Vector<MemberVO> vecList = new Vector<MemberVO>();	
 		
+		String sql="select * from memberTBL";		
 		try(Connection con=getConnection();
 				PreparedStatement pstmt=con.prepareStatement(sql);
 				ResultSet rs=pstmt.executeQuery()) {
-			
 			while(rs.next()) {
 				MemberVO vo = new MemberVO();
 				vo.setNo(rs.getInt(1));
@@ -49,12 +47,12 @@ public class MemberDAO {
 				vo.setGender(rs.getString(4));
 				vecList.add(vo);
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return vecList;
 	}
+<<<<<<< master
 	
 	//데이터 삽입
 	public int insertMember(MemberVO vo) {
@@ -115,4 +113,6 @@ public class MemberDAO {
 		}
 		return result;
 	}
+=======
+>>>>>>> 950558c 20200413 empty
 }
