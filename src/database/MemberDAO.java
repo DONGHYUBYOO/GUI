@@ -32,7 +32,7 @@ public class MemberDAO {
 		return con;
 	}	
 	//데이터베이스 요청
-	public Vector<MemberVO> getList() {
+	public Vector<MemberVO> listMember() {
 		Vector<MemberVO> vecList = new Vector<MemberVO>();	
 		
 		String sql="select * from memberTBL";		
@@ -52,7 +52,6 @@ public class MemberDAO {
 		}
 		return vecList;
 	}
-<<<<<<< master
 	
 	//데이터 삽입
 	public int insertMember(MemberVO vo) {
@@ -113,6 +112,4 @@ public class MemberDAO {
 		}
 		return result;
 	}
-=======
->>>>>>> 950558c 20200413 empty
 }
