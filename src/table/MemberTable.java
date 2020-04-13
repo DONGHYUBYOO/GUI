@@ -193,6 +193,7 @@ public class MemberTable extends JFrame implements ActionListener {
 
 		txtGender.addActionListener(this);
 		btnSearch.addActionListener(this);
+		btnDelete.addActionListener(this);
 	}	
 	
 	//MemberTBL의 전체 내용 가져오기
@@ -225,11 +226,9 @@ public class MemberTable extends JFrame implements ActionListener {
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {	//컴포넌트에서 바로 수행하지 않고 이벤트로 작업을 위임하여 수행
-		
+	public void actionPerformed(ActionEvent e) {	//컴포넌트에서 바로 수행하지 않고 이벤트로 작업을 위임하여 수행		
 		//이름과 나이와 성별을 가져온 후 데이터베이스에 입력하기
-		if(e.getSource()==txtGender) {
-			
+		if(e.getSource()==txtGender) {			
 			//텍스트필드에 작성된 (이름, 나이, 성별)을 가져온 후
 			MemberVO vo = new MemberVO();
 			vo.setName(txtName.getText());
@@ -249,6 +248,7 @@ public class MemberTable extends JFrame implements ActionListener {
 			}else {	//실패
 				JOptionPane.showMessageDialog(this, "INSERT 실패");			
 			}
+			
 		}else if(e.getActionCommand().equals("조회")) {
 			//사용자가 입력한 번호 가져오기
 			int no=Integer.parseInt(txtSearch.getText());
@@ -257,6 +257,21 @@ public class MemberTable extends JFrame implements ActionListener {
 			Object[] rowData= {vo.getNo(),vo.getName(),vo.getAge(),vo.getGender()};
 			model1.addRow(rowData);
 			txtSearch.setText("");
+			
+		}else if(e.getActionCommand().equals("삭제")) {
+			//사용자가 입력한 번호 가져오기
+			int no=Integer.parseInt(txtDelete.getText());
+			//해당하는 회원 삭제
+			int result=dao.deleteMember(no);
+			if(result>0) {
+				JOptionPane.showMessageDialog(this, "DELETE 성공");
+				//모델이 가지고 있던 데이터 초기화
+				model.setNumRows(0);
+				txtDelete.setText("");
+				list();
+			}else {
+				JOptionPane.showMessageDialog(this, "DELETE 실패");
+			}
 		}
 	}
 }

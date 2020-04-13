@@ -60,12 +60,15 @@ public class MemberDAO {
 	public int insertMember(MemberVO vo) {
 		int result=0;		
 		String sql="insert into memberTBL values(member_seq.nextval,?,?,?)";
+		
 		try(Connection con=getConnection();
 				PreparedStatement pstmt=con.prepareStatement(sql)) {
+			
 			pstmt.setString(1,vo.getName());
 			pstmt.setInt(2,vo.getAge());
 			pstmt.setString(3,vo.getGender());
-			result=pstmt.executeUpdate();			
+			result=pstmt.executeUpdate();		
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
@@ -76,6 +79,7 @@ public class MemberDAO {
 	public  MemberVO searchMember(int no) {
 		MemberVO vo=null;
 		String sql="select * from memberTBL where no=?";
+		
 		try(Connection con=getConnection();
 				PreparedStatement pstmt=con.prepareStatement(sql);) {
 			
@@ -93,5 +97,22 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 		return vo;
+	}
+	
+	//회원 삭제
+	public int deleteMember(int no) {
+		int result=0;
+		String sql="delete from memberTBL where no=?";		
+		
+		try(Connection con=getConnection();
+				PreparedStatement pstmt=con.prepareStatement(sql)) {
+			
+			pstmt.setInt(1, no);
+			result=pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }
